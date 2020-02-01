@@ -29,8 +29,5 @@ public class RotateMe : MonoBehaviour
         myRotation.Set(x, y, 0f);
         gameObject.transform.rotation = Quaternion.Euler( myRotation);//Rotate(myRotation);
         CBUG.Do("ROTATING");
-
-
-        CBUG.SrsError("WHY EWE EROTATE");
     }
 }
