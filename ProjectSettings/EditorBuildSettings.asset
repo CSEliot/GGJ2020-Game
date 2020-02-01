@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Eliot/Poof Internet Magic.unity
+    guid: a0a8cb2c0715b124184f915b3a3f4658
   m_configObjects: {}
