@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Eliot/Poof Internet Magic.unity
-    guid: a0a8cb2c0715b124184f915b3a3f4658
+    path: Assets/KiteLion/Demos/PhotonArena/PhotonArena Demo 3D.unity
+    guid: 92793cc9f22d63d40ae8a95ffd15113d
   m_configObjects: {}
