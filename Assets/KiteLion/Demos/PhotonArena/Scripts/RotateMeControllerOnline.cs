@@ -50,11 +50,8 @@ public class RotateMeControllerOnline : MonoBehaviour
         Vector3 previousRotation = new Vector3(0, GetComponent<Rigidbody>().rotation.eulerAngles.y);
         Vector3 newRotation = new Vector3(0, previousRotation.y + _sideInput * RotateSpeed);
 
-        Vector3 previousVelocity = new Vector3(0, 0, GetComponent<Rigidbody>().velocity.z);
-        Vector3 newVelocity = new Vector3(0, 0, previousVelocity.z + _forwardInput * ForwardSpeed);
-
         GetComponent<Rigidbody>().rotation = Quaternion.Euler(newRotation);
-        GetComponent<Rigidbody>().velocity = transform.forward * _forwardInput;
+        GetComponent<Rigidbody>().velocity = transform.forward * ForwardSpeed * _forwardInput;
         GetComponent<Rigidbody>().isKinematic = false;
 
     }
