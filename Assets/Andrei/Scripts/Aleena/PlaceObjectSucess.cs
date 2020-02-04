@@ -15,18 +15,23 @@ public class PlaceObjectSucess : MonoBehaviour
 
         public GameObject flashingIcon1;
         public GameObject successFlash;
+        public bool isPlayer1 = false;
+    public bool isPlayer2 = false;
 
     bool pickIt = false;
     bool place = false;
 
     void Awake(){
-        ObjectPlayer = gameManager.player1.GetComponent<PlayerObjectList>().pipePickup.gameObject;
+       if(isPlayer1) ObjectPlayer = gameManager.player1.GetComponent<PlayerObjectList>().pipePickup.gameObject;
+       if(isPlayer2) ObjectPlayer = gameManager.player2.GetComponent<PlayerObjectList>().pipePickup.gameObject;
     }
 
 
     public void PlaceObjectArea(string objName){
-        place = true;
-        suceed();
+        if(pickIt){
+            place = true;
+            suceed();
+        }
     }
 
     public void PickUpObject(string objectPickedUp) {
@@ -42,6 +47,7 @@ public class PlaceObjectSucess : MonoBehaviour
             ObjectPlayer.SetActive(false);
             flashingIcon1.SetActive(false);
             successFlash.SetActive(true);
+            ObjectPlayer.transform.parent.parent.parent.GetComponent<PlayerMovement>().ArmsPickUpAnimation();
         }
     }
 

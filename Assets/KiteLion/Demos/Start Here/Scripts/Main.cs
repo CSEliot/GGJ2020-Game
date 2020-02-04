@@ -8,7 +8,7 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetInt("CBUG_ON", 1);
+        PlayerPrefs.SetInt("CBUG_ON", 0);
         CBUG.Do("Sanity check Start");
     }
 

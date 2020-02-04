@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000016689, y: 0.000027299}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 24.478, y: 15.066}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6988858463374073723
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.1782589, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.1782589, a: 0}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -90,9 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804891aa51e3adc468c7320221b39545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enabled: 1
-  EnabledOnConsole: 1
-  EnabledOnScreen: 1
+  Enabled: 0
+  EnabledOnConsole: 0
+  EnabledOnScreen: 0
   ClearTime: 3
   ClearLinesAmount: 0
   ClearScreenButton: 0

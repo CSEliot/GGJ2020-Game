@@ -31,5 +31,10 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
+  - Player1Win
+  - Player2Win
+  - GetPlayerWinTime
+  - GrabBarrel
+  - PlayerMoveToNextFloor
   DisableAutoOpenWizard: 1
   ShowSettings: 0

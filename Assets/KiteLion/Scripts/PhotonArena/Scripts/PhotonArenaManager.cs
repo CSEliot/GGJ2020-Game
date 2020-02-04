@@ -147,7 +147,7 @@ public class PhotonArenaManager : Singleton<PhotonArenaManager>
     public int GetClockInSeconds() {
         if (CurrentServerUserDepth == ServerDepthLevel.Offline) {
             //            return DateTime.Now.TimeOfDay.Milliseconds;
-            return Convert.ToInt32((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) & int.MaxValue) / 60;
+            return Convert.ToInt32((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) & int.MaxValue) / 100;
         }
         else {
             return PhotonNetwork.ServerTimestamp;

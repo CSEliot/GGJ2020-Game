@@ -9,7 +9,8 @@ TagManager:
   - BellHopGuy
   - BellHop
   - CBUG
-  - PlayerItem
+  - Player1Pickup
+  - Player2Pickup
   layers:
   - Default
   - TransparentFX

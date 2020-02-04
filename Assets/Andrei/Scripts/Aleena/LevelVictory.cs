@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class LevelVictory : MonoBehaviour
@@ -19,9 +20,13 @@ public class LevelVictory : MonoBehaviour
     public GameManager gameManager;
     public bool finishedAlready = false;
 
+    public bool isPlayer1 = false;
+    public bool isPlayer2 = false;
+
     void Awake(){
         finishedAlready = false;
-        ObjectPlayer = gameManager.player1.GetComponent<PlayerObjectList>().pipePickup.gameObject;
+       if(isPlayer1) ObjectPlayer = gameManager.player1.GetComponent<PlayerObjectList>().pipePickup.gameObject;
+       if(isPlayer2) ObjectPlayer = gameManager.player2.GetComponent<PlayerObjectList>().pipePickup.gameObject;
     }
 
     void Start()
@@ -34,7 +39,8 @@ public class LevelVictory : MonoBehaviour
     void Update(){
         if(ObjectPlace.GetComponentInChildren<MeshRenderer>().enabled && !finishedAlready){
             finishedAlready = true;
-            gameManager.PlayerMoveToNextFloor(player);
+            gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All,  player);
+            //gameManager.PlayerMoveToNextFloor(player);
         }
     }
 }
