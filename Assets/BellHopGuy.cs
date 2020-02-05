@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class BellHopGuy : MonoBehaviour
@@ -39,13 +40,17 @@ public class BellHopGuy : MonoBehaviour
 
     IEnumerator Delay(){
         yield return new WaitForSeconds(1);
-        gameManager.PlayerMoveToNextFloor(player);
+        Debug.Log("Delay() called bad!");
+        //gameManager.PlayerMoveToNextFloor(player);
+        gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
     }
 
     IEnumerator Kill(){
         yield return new WaitForSeconds(8);
         if(!hasFinished){
-            gameManager.PlayerMoveToNextFloor(player);
+            Debug.Log("Kill() called bad!");
+            //gameManager.PlayerMoveToNextFloor(player);
+            gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
         }
     }
 }

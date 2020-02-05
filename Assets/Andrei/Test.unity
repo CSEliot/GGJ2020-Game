@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4452687, g: 0.49489874, b: 0.5739146, a: 1}
+  m_IndirectSpecularColor: {r: 0.4452685, g: 0.49489838, b: 0.57391405, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2309,7 +2309,7 @@ MonoBehaviour:
   gameManager: {fileID: 1453939344}
   anim: {fileID: 1976723608}
   deadGuy: {fileID: 2066495100}
-  body: {fileID: 0}
+  body: {fileID: 995683081}
   check: {fileID: 1785403556}
   isPlayer1: 0
   isPlayer2: 1

@@ -37,9 +37,17 @@ public class Puddle : MonoBehaviour
         }
 
         if ((Input.GetButtonDown("Fire1")) && inTrigger) {
+            if (isPlayer1 && player1 == null)
+            {
+                return;
+            }
+            if (isPlayer2 && player2 == null)
+            {
+                return;
+            }
             clicksToDelete--;
             if(isPlayer1) player1.GetComponent<PlayerMovement>().ArmsMoppingMotion();
-            else if(isPlayer2) player1.GetComponent<PlayerMovement>().ArmsMoppingMotion();
+            else if(isPlayer2) player2.GetComponent<PlayerMovement>().ArmsMoppingMotion();
 
             if(clicksToDelete == 6){
                 scaleMesh.localScale = new Vector3(.8f,.8f,.8f);

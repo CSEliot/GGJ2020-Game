@@ -154,18 +154,18 @@ public class GameManager : MonoBehaviour{
                 player1 = PM.SpawnPlayer(new Vector3(1000,1000,1000), player1Position.transform.rotation, "Player1").transform;
                 player1.rotation = Quaternion.Euler(new Vector3(0,-45,0));
                 player1.tag = "PlayerSelf";
-                camera.transform.position = camera1Position.position;
-                camera2.transform.position = camera2Position.position;
+                //camera.transform.position = camera1Position.position;
+                //camera2.transform.position = camera2Position.position;
                 player1Camera.targetTexture = null;
                 player2Camera.targetTexture = player1Render;
             }else if(playerID == 2){
                 player2 = PM.SpawnPlayer(new Vector3(1000,1000,1000), player2Position.transform.rotation, "Player2").transform;
                 player2.rotation = Quaternion.Euler(new Vector3(0,-45,0));
                 player2.tag = "PlayerSelf";
-                camera.transform.position = camera2Position.position;
-                camera2.transform.position = camera1Position.position;
-                player1Camera.targetTexture = null;
-                player2Camera.targetTexture = player1Render;
+                //camera.transform.position = camera2Position.position;
+                //camera2.transform.position = camera1Position.position;
+                player1Camera.targetTexture = player1Render;
+                player2Camera.targetTexture = null;
             }
 
             CBUG.Do(playerID + " - Player ID");
@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour{
     [PunRPC]
     void GetPlayerWinTime(){
         if(playerID == 1) {
+
             if(PM.GetData("player1WinTime") != null) {
                 playerTimeText.text = "YOUR TIME: " + (float)PM.GetData("player1WinTime");
             } else {
@@ -266,6 +267,7 @@ public class GameManager : MonoBehaviour{
     // Increase Floor for Player
     [PunRPC]
     public void PlayerMoveToNextFloor(int playerNumber){ // 0 = Player 1, 1 - Player 2
+        Debug.Log("END MINIGAME: " + playerNumber);
         if(playerNumber == 0){
             StartCoroutine(EndMiniGamePlayer1());
         }else if(playerNumber == 1){
@@ -379,7 +381,7 @@ public class GameManager : MonoBehaviour{
         elevator.SetTrigger("Animate");
         yield return new WaitForSeconds(0.5f);
         elevator.SetTrigger("Fade");
-        camera2.SetTrigger("Animate");
+        camera.SetTrigger("Animate");
         rooms.SetTrigger("Animate"); // room leave
         tower1Meter.SetTrigger("Animate");
         player1Floor++;
@@ -419,7 +421,7 @@ public class GameManager : MonoBehaviour{
         elevator2.SetTrigger("Animate");
         yield return new WaitForSeconds(0.5f);
         elevator2.SetTrigger("Fade");
-        camera.SetTrigger("Animate");
+        camera2.SetTrigger("Animate");
         rooms2.SetTrigger("Animate"); // room leave
         tower2Meter.SetTrigger("Animate");
         player2Floor++;
@@ -463,7 +465,7 @@ public class GameManager : MonoBehaviour{
             //StartCoroutine(FakeWinMiniGame3(0));
         }
         rooms.SetTrigger("Animate"); // room enter
-        camera2.SetTrigger("Animate");
+        camera.SetTrigger("Animate");
         elevator.SetTrigger("Fade");
         if (PM.IsLocalClient(player1.GetComponent<PhotonView>()))
         {
@@ -484,7 +486,7 @@ public class GameManager : MonoBehaviour{
         
         rooms.SetTrigger("Animate"); // room enter
         elevatorWalls.SetTrigger("Animate");
-        camera2.SetTrigger("Animate");
+        camera.SetTrigger("Animate");
         elevator.SetTrigger("Fade");
         if (PM.IsLocalClient(player1.GetComponent<PhotonView>()))
         {
@@ -505,7 +507,7 @@ public class GameManager : MonoBehaviour{
         
         rooms2.SetTrigger("Animate"); // room enter
         elevatorWalls2.SetTrigger("Animate");
-        camera.SetTrigger("Animate");
+        camera2.SetTrigger("Animate");
         elevator2.SetTrigger("Fade");
         if (PM.IsLocalClient(player2.GetComponent<PhotonView>()))
         {
@@ -534,7 +536,7 @@ public class GameManager : MonoBehaviour{
             //StartCoroutine(FakeWinMiniGame3(1));
         }
         rooms2.SetTrigger("Animate"); // room enter
-        camera.SetTrigger("Animate");
+        camera2.SetTrigger("Animate");
         elevator2.SetTrigger("Fade");
         if (PM.IsLocalClient(player2.GetComponent<PhotonView>()))
         {
@@ -550,7 +552,8 @@ public class GameManager : MonoBehaviour{
 
     IEnumerator FakeWinMiniGame3(int playerIndex){
         yield return new WaitForSeconds(2);
-        PlayerMoveToNextFloor(playerIndex);
+        Debug.Log("FakeWinMiniGame3( called bad!");
+        //PlayerMoveToNextFloor(playerIndex);
     }
 
     IEnumerator MiniGame3(int playerIndex){
@@ -563,129 +566,4 @@ public class GameManager : MonoBehaviour{
             player2.position = player2Position.position;
         }
     }
-
-/*
-    IEnumerator MockAnimations(){ // TEMP STUFF
-        yield return new WaitForSeconds(1f);
-
-        // Enter Elevator from Lobby
-        elevator.SetTrigger("Animate");
-        dude.SetBool("LobbyExit",true);
-        yield return new WaitForSeconds(0.5f);
-
-        // closing door and fading out
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Fade");
-        yield return new WaitForSeconds(0.25f);
-        tower1Meter.SetTrigger("Animate");
-        camera2.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room leave
-
-        // Switch to ROOM 1 from LOBBY  ////////////////////////////////////////////
-        yield return new WaitForSeconds(1.5f);
-        roomObjects[0].SetActive(false);
-        roomObjects[1].SetActive(true);
-        rooms.SetTrigger("Animate"); // room enter
-        elevator.SetTrigger("Fade");
-        camera2.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.3f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.25f);
-        elevator.SetTrigger("Animate");
-
-
-        yield return new WaitForSeconds(2.5f);
-
-
-        // End of Mini Game, Enter Elevator
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Fade");
-        camera2.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room leave
-        tower1Meter.SetTrigger("Animate");
-        player1Floor++;
-
-        // Switch to ROOM 2 from ROOM 1  ////////////////////////////////////////////
-        yield return new WaitForSeconds(1.5f);
-        roomObjects[1].SetActive(false);
-        roomObjects[2].SetActive(true);
-        camera2.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room enter
-        elevator.SetTrigger("Fade");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.3f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.25f);
-        elevator.SetTrigger("Animate");
-
-        yield return new WaitForSeconds(2.5f);
-
-
-        // End of Mini Game, Enter Elevator
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Fade");
-        camera.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room leave
-        tower1Meter.SetTrigger("Animate");
-        player1Floor++;
-
-        // Switch to ROOM 3 from ROOM 2  ////////////////////////////////////////////
-        yield return new WaitForSeconds(1.5f);
-        roomObjects[2].SetActive(false);
-        roomObjects[3].SetActive(true);
-        camera.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room enter
-        elevator.SetTrigger("Fade");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.3f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.25f);
-        elevator.SetTrigger("Animate");
-
-        yield return new WaitForSeconds(2.5f);
-
-
-        // End of Mini Game, Enter Elevator
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Fade");
-        camera.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room leave
-        tower1Meter.SetTrigger("Animate");
-        player1Floor++;
-
-        // Switch to ROOM 4 from ROOM 3  ////////////////////////////////////////////
-        yield return new WaitForSeconds(1.5f);
-        roomObjects[3].SetActive(false);
-        roomObjects[4].SetActive(true);
-        camera.SetTrigger("Animate");
-        rooms.SetTrigger("Animate"); // room enter
-        elevator.SetTrigger("Fade");
-        yield return new WaitForSeconds(0.5f);
-        elevator.SetTrigger("Animate");
-        yield return new WaitForSeconds(0.3f);
-        dude.SetTrigger("EnterExit");
-        yield return new WaitForSeconds(0.25f);
-        elevator.SetTrigger("Animate");
-    }
-    */
 }
