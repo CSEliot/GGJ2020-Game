@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using KiteLion.Debugging;
 using Photon.Pun;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public class LevelVictory : MonoBehaviour
     void Update(){
         if(ObjectPlace.GetComponentInChildren<MeshRenderer>().enabled && !finishedAlready){
             finishedAlready = true;
+            CBUG.Do("Level Victory! From: " + player);
             gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All,  player);
             //gameManager.PlayerMoveToNextFloor(player);
         }

@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour{
     // Increase Floor for Player
     [PunRPC]
     public void PlayerMoveToNextFloor(int playerNumber){ // 0 = Player 1, 1 - Player 2
-        Debug.Log("END MINIGAME: " + playerNumber);
+        Debug.Log("END MINIGAME FOR: " + playerNumber);
         if(playerNumber == 0){
             StartCoroutine(EndMiniGamePlayer1());
         }else if(playerNumber == 1){
@@ -426,6 +426,7 @@ public class GameManager : MonoBehaviour{
                 PM.SaveData("isGameOver", true);
                 PM.SaveData("player1WinTime", playerTime);
                 hud.enabled = false;
+                StartCoroutine(PlayAgainDelay());
             }
 
             playerTimeText.text = "YOUR TIME: " + playerTime;
@@ -437,7 +438,6 @@ public class GameManager : MonoBehaviour{
 
         if (player1Floor == 4)
         {
-            StartCoroutine(PlayAgainDelay());
         }
     }
 
@@ -469,17 +469,17 @@ public class GameManager : MonoBehaviour{
                 PM.SaveData("isGameOver", true);
                 PM.SaveData("player2WinTime", playerTime);
                 hud.enabled = false;
+                StartCoroutine(PlayAgainDelay());
             }
             playerTimeText.text = "YOUR TIME: " + playerTime;
             opponentTimeText.text = "OPPONENT TIME: " + opponentTime;
             GetComponent<PhotonView>().RPC("GetPlayerWinTime", RpcTarget.All);
-        }else{
+        } else {
             StartCoroutine(LoadNextRoomPlayer2());
         }
 
         if(player2Floor == 4)
         {
-            StartCoroutine(PlayAgainDelay());
         }
     }
 

@@ -37,6 +37,7 @@ public class CleanUpMiniGame : MonoBehaviour
                 player2 = GameObject.Find("Player2(Clone)");
                 player2.GetComponent<PlayerMovement>().SwitchBackFromMop();
             }
+            Debug.Log("Calling RPC!");
             gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All,  player);
         }
     }

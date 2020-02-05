@@ -18,9 +18,13 @@ public class BellHopGuy : MonoBehaviour
 
     bool _movingToNextLevel = false;
 
+    PhotonArenaManager PM;
+
     void Awake(){
         hasFinished = false;
         StartCoroutine(Kill());
+
+        PM = PhotonArenaManager.Instance;
     }
 
     void OnTriggerEnter(Collider collision){
@@ -61,7 +65,12 @@ public class BellHopGuy : MonoBehaviour
                 _movingToNextLevel = true;
                 Debug.Log("Kill() called bad!");
                 //gameManager.PlayerMoveToNextFloor(player);
-                gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+                if (isPlayer1 && PM.GetLocalPlayerID() == 1) {
+                    gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+                }
+                if (isPlayer2 && PM.GetLocalPlayerID() == 2) {
+                    gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+                }
             }
         }
     }
