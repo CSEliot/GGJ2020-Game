@@ -29921,6 +29921,7 @@ MonoBehaviour:
   - {fileID: 1302445566}
   - {fileID: 251941815}
   - {fileID: 1890534475}
+  gameStartTime: 0
 --- !u!4 &1453939345
 Transform:
   m_ObjectHideFlags: 0
@@ -41410,7 +41411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109}
+  m_AnchoredPosition: {x: 0, y: -109.00003}
   m_SizeDelta: {x: -248, y: -139.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1984860217

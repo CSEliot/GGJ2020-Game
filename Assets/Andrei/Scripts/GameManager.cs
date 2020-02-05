@@ -84,6 +84,11 @@ public class GameManager : MonoBehaviour{
     public GameObject[] roomObjects; // 0 = lobby 
     public GameObject[] roomObjects2; // 0 = lobby 
 
+    /// <summary>
+    /// IN MILLISECONDS
+    /// </summary>
+    public int gameStartTime;
+
     void Start(){
         PM = PhotonArenaManager.Instance;
 
@@ -206,6 +211,7 @@ public class GameManager : MonoBehaviour{
 
             if(PM.GetClock() - countdownStartTime >= countdownLength ) {
                 isGameStarted = true;
+                gameStartTime = PM.GetClock();
                 PM.GetRoom().IsVisible = false;
                 PM.GetRoom().IsOpen = false;
                 StartMatch();
@@ -215,7 +221,7 @@ public class GameManager : MonoBehaviour{
         }
 
         if(isGameStarted == true && !isGameOver){
-            playerTime += Time.deltaTime;
+            playerTime = (PM.GetClock() - gameStartTime)/1000f;
             playerTimeHUD.text = Convert.ToInt32(playerTime).ToString();
         }
     }
@@ -262,6 +268,12 @@ public class GameManager : MonoBehaviour{
     IEnumerator PlayAgainDelay(){
         yield return new WaitForSeconds(3);
         playAgainMenu.SetActive(true);
+        if(playerID == 2) {
+            playAgainMenu.GetComponent<Canvas>().worldCamera = player2Camera;
+        }
+        if (playerID == 1) {
+            playAgainMenu.GetComponent<Canvas>().worldCamera = player1Camera;
+        }
     }
 
     // Increase Floor for Player
@@ -392,11 +404,13 @@ public class GameManager : MonoBehaviour{
         yield return new WaitForSeconds(0.2f);
 
         if(player1Floor == 4){ // 3 is max, so if we go one more we won
-            isGameOver = true;
-            PM.SaveData("isGameOver", true);
-            PM.SaveData("player1WinTime", playerTime);
             StartCoroutine(LoadRoofPlayer1());
-            hud.enabled = false;
+            if(playerID == 1) {
+                isGameOver = true;
+                PM.SaveData("isGameOver", true);
+                PM.SaveData("player1WinTime", playerTime);
+                hud.enabled = false;
+            }
 
             playerTimeText.text = "YOUR TIME: " + playerTime;
             opponentTimeText.text = "OPPONENT TIME: " + opponentTime;
@@ -405,7 +419,7 @@ public class GameManager : MonoBehaviour{
             StartCoroutine(LoadNextRoomPlayer1());
         }
 
-        if (player2Floor == 4 && player1Floor == 4)
+        if (player1Floor == 4)
         {
             StartCoroutine(PlayAgainDelay());
         }
@@ -432,11 +446,14 @@ public class GameManager : MonoBehaviour{
         yield return new WaitForSeconds(0.2f);
 
         if(player2Floor == 4){ // 3 is max, so if we go one more we won
-            isGameOver = true;
-            PM.SaveData("isGameOver", true);
-            PM.SaveData("player2WinTime", playerTime);
             StartCoroutine(LoadRoofPlayer2());
-            hud.enabled = false;
+            if(playerID == 2)
+            {
+                isGameOver = true;
+                PM.SaveData("isGameOver", true);
+                PM.SaveData("player2WinTime", playerTime);
+                hud.enabled = false;
+            }
             playerTimeText.text = "YOUR TIME: " + playerTime;
             opponentTimeText.text = "OPPONENT TIME: " + opponentTime;
             GetComponent<PhotonView>().RPC("GetPlayerWinTime", RpcTarget.All);
@@ -444,7 +461,7 @@ public class GameManager : MonoBehaviour{
             StartCoroutine(LoadNextRoomPlayer2());
         }
 
-        if(player2Floor == 4 && player1Floor == 4)
+        if(player2Floor == 4)
         {
             StartCoroutine(PlayAgainDelay());
         }
