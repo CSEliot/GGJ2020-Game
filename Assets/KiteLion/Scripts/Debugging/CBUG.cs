@@ -67,6 +67,7 @@ namespace KiteLion {
                 tapsUntilEnable = 10;
                 currentTaps = 0;
                 DontDestroyOnLoad(transform.parent);
+                //DontDestroyThis.List.Add(transform.parent);
             }
 
             private CBUG( bool isTemp)
@@ -218,6 +219,7 @@ namespace KiteLion {
                     self = myCBUG;
                     //DontDestroyOnLoad(cbugCam);
                     DontDestroyOnLoad(myCBUG);
+                    DontDestroyThis.List.Add(myCBUG);
                     return myCBUG.GetComponentInChildren<CBUG>();
                 }
                 else

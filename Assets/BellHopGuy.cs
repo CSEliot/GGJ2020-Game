@@ -16,6 +16,8 @@ public class BellHopGuy : MonoBehaviour
     public bool isPlayer1 = false;
     public bool isPlayer2 = false;
 
+    bool _movingToNextLevel = false;
+
     void Awake(){
         hasFinished = false;
         StartCoroutine(Kill());
@@ -40,17 +42,27 @@ public class BellHopGuy : MonoBehaviour
 
     IEnumerator Delay(){
         yield return new WaitForSeconds(1);
-        Debug.Log("Delay() called bad!");
-        //gameManager.PlayerMoveToNextFloor(player);
-        gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+
+        if(_movingToNextLevel) {
+            
+        } else {
+            _movingToNextLevel = true;
+            Debug.Log("Delay() called bad!");
+            gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+        }
     }
 
     IEnumerator Kill(){
         yield return new WaitForSeconds(8);
         if(!hasFinished){
-            Debug.Log("Kill() called bad!");
-            //gameManager.PlayerMoveToNextFloor(player);
-            gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+            if (_movingToNextLevel) {
+
+            } else {
+                _movingToNextLevel = true;
+                Debug.Log("Kill() called bad!");
+                //gameManager.PlayerMoveToNextFloor(player);
+                gameManager.GetComponent<PhotonView>().RPC("PlayerMoveToNextFloor", RpcTarget.All, player);
+            }
         }
     }
 }

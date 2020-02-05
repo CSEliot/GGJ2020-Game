@@ -109,10 +109,18 @@ public class GameManager : MonoBehaviour{
         roomObjects2[4].SetActive(false);
 
         PlayerPrefs.SetInt("CBUG_ON", 0);
+
+        //foreach (GameObject obj in GameObject.fi) {
+
+        //}
     }
 
     public void CloseMenu(){
         StartCoroutine(DisableMenu());
+    }
+
+    public void ExitGame() {
+        Application.Quit();
     }
 
     IEnumerator DisableMenu(){
@@ -146,8 +154,12 @@ public class GameManager : MonoBehaviour{
 
     public void QuitGame(){
 
-        Application.Quit();
-
+        foreach (UnityEngine.Object Obj in DontDestroyThis.List) {
+            Destroy(Obj);
+        }
+        //SceneManager.UnloadSceneAsync(0, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void Update(){
@@ -223,6 +235,10 @@ public class GameManager : MonoBehaviour{
         if(isGameStarted == true && !isGameOver){
             playerTime = (PM.GetClock() - gameStartTime)/1000f;
             playerTimeHUD.text = Convert.ToInt32(playerTime).ToString();
+
+            if(PM.CurrentServerUserDepth == PhotonArenaManager.ServerDepthLevel.Offline || PM.GetRoom().PlayerCount < 2) {
+                QuitGame();
+            }
         }
     }
 
