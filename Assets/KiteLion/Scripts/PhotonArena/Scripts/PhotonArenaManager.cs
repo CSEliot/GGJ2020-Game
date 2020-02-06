@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
 using ExitGames.Client.Photon;
-using KiteLion.Debugging;
 /*
 todo provide structure for setting up scene items and other stuff.
 Problem: When referencing a singleton, several variables that exist that could cause issue.
